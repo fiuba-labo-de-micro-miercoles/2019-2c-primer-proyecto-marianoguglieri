@@ -1,7 +1,7 @@
 .include "m328pdef.inc"
 
 .cseg 
-	;direcciones de código
+	;direcciones de codigo
 .org 0x0000
 	jmp		configuracion
 .org INT0addr
@@ -21,9 +21,10 @@ configuracion:
 
 	;declaro el PORTD como entrada activando resistencia de pull-up
 	ldi		R16, 0x00						
-	out		DDRD, R16						
-	ldi		R16, 0xff	
-	out		PORTD, R16
+	out		DDRD, R16
+	;si quiero activar la R de pull-up utilizo las siguientes dos lineas de cogido:						
+	;ldi		R16, 0xff	
+	;out		PORTD, R16
 
 	;configuro la interrupcion 0 por flanco ascendente
 	ldi		R16,( 1 << ISC01 | 0 << ISC00  )
@@ -38,7 +39,7 @@ main:
 		sbi		PORTB,0
 fin:	rjmp	fin
 
-	;código de la interrupcion
+	;codigo de la interrupcion
 interrupcion_0:
 
 				cbi		PORTB,0
