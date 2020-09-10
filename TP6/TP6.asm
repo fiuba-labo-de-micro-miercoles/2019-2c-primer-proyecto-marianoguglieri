@@ -29,11 +29,11 @@ configuracion:
 	sei
 
 main:
-	in		R16, PIND				;verifico estado puerto D
-	andi	R16, (1 << PIND1 | 1 << PIND0)	;y guardo en un registro los valores de los pines
-
+	in		R16, PIND								;verifico estado puerto D
+	andi	R16, (1 << PIND1 | 1 << PIND0)			;Se hacen 2 lecturas con un delay en el medio y se comparan si ambas fueron iguales
+													;De ser así se entra a la rutina de polling
 	rcall	delay
-
+													
 	in		R17, PIND
 	andi	R17, (1 << PIND1 | 1 << PIND0)
 	
