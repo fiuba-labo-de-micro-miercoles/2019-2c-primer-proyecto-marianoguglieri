@@ -30,8 +30,16 @@ configuracion:
 
 main:
 	in		R16, PIND				;verifico estado puerto D
+	andi	R16, (1 << PIND1 | 1 << PIND0)	;y guardo en un registro los valores de los pines
 
-	rcall   polling					;entro a la rutina de polling
+	rcall	delay
+
+	in		R17, PIND
+	andi	R17, (1 << PIND1 | 1 << PIND0)
+	
+	cp		R16, R17
+	breq	polling
+
 	jmp		main
 
 polling:
@@ -78,3 +86,14 @@ reti
 		sbi		PORTB, 0
 reti
 	
+delay: 
+		ldi r23, 32 
+		loop3: ldi r24, 255 
+		loop2: ldi r22, 255 
+		loop1: dec r22 
+		brne loop1 
+		dec r24 
+		brne loop2 
+		dec r23 
+		brne loop3	
+ret
